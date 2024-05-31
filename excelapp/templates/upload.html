@@ -1,0 +1,49 @@
+<style>
+  .table-content {
+    border-collapse: collapse;
+    margin: 25px 0;
+    min-width: 400px;
+    text-align: center;
+  }
+  
+  .table-content tr {
+    text-align: left;
+  }
+  
+  .table-content th,
+  .table-content td {
+    padding: 2px 15px;
+  }
+</style>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert">
+      <p>{{ message }}</p>
+    </div>
+  {% endfor %}
+{% endif %}
+<form method="post" enctype="multipart/form-data" action="/upload/">
+  {% csrf_token %}
+  <input type="file" name="myfile" id="input_field" />
+  <button type="submit" id="btn">Upload</button>
+</form>
+
+<p></p>
+
+{% if result %}
+  <table class="table-content">
+    <tr>
+      <th>State</th>
+      <th>DPD</th>
+      <th>Count</th>
+    </tr>
+    {% for r in result %}
+      <tr>
+        <td>{{ r.state }}</td>
+        <td>{{ r.dpd }}</td>
+        <td>{{ r.dpd_count }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endif %}
